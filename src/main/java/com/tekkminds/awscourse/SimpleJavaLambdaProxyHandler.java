@@ -4,6 +4,7 @@ import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyRequestEvent;
 import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyResponseEvent;
+import com.amazonaws.services.lambda.runtime.logging.LogLevel;
 
 /**
  * As we configure the API Gateway as a simple Proxy, we use the APIGatewayProxyRequestEvent as input and
@@ -13,13 +14,37 @@ import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyResponseEvent
 public class SimpleJavaLambdaProxyHandler implements RequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent> {
 
     // Initialization code - put code here you want to initialize during cold start (and not get charged for it)
+    static {
+        expensiveOperation();
+    }
 
     @Override
     public APIGatewayProxyResponseEvent handleRequest(APIGatewayProxyRequestEvent apiGatewayProxyRequestEvent, Context context) {
         // APIGatewayProxyRequestEvent contains a lot of information about the request
         // Context contains all available information about the context this function is executed (like the function name, Version, ...)
 
-        return null;
+        context.getLogger().log("Changed Function " + context.getFunctionName() + ":" + context.getFunctionVersion() + " has been called", LogLevel.INFO);
+
+        try {
+            var result = """
+                    {
+                        "message": "Hello World",
+                        "functionName": "%s",
+                        "functionVersion": "%s"
+                    }
+                    """.formatted(context.getFunctionName(), context.getFunctionVersion());
+
+            return new APIGatewayProxyResponseEvent().withStatusCode(200).withBody(result);
+        } catch (Exception e) {
+            context.getLogger().log("Failed to convert request body to JSON", LogLevel.ERROR);
+            var errorMessage = """
+                    {
+                        "errorMessage": "%s",
+                        "errorCode": 500
+                    }
+                    """.formatted(e.getMessage());
+            return new APIGatewayProxyResponseEvent().withStatusCode(500).withBody(errorMessage);
+        }
     }
 
     static void expensiveOperation() {
