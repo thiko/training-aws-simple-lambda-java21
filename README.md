@@ -90,6 +90,7 @@ In this exercise, you'll work with a pre-configured Java project to create a Lam
    - Note the execution time for your first test (it includes the expensive operation)
    - Run the test again immediately
    - Compare the execution time (it should be faster as the expensive operation runs only during cold starts)
+   *Optional if you were too fast:*
    - Wait about 15 minutes without invoking the function
    - Run the test again and observe if a cold start occurs
 
