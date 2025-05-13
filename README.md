@@ -164,4 +164,3 @@ Key aspects of the provided Java code:
 
 - Try deploying a more complex Lambda function that processes input from the API Gateway event
 - Experiment with different memory allocations to see how it affects cold start times
-- Implement a Lambda function that connects to other AWS services like DynamoDB or S3
