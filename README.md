@@ -16,6 +16,14 @@ In this exercise, you'll work with a pre-configured Java project to create a Lam
      - Note the implementation of `RequestHandler` interface
      - Observe how it handles API Gateway proxy events
      - See how expensive operations are handled in the static initializer
+     - Fill the gaps - write your code to return an JSON object like:
+     ```json
+        {
+               "message": "Hello World",
+               "functionName": "%s",
+               "functionVersion": "%s"
+           }
+        ```
 
 2. **Build the project**
    - Open a terminal in the project directory
