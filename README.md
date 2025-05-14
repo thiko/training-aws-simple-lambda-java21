@@ -38,10 +38,12 @@ In this exercise, you'll work with a pre-configured Java project to create a Lam
    - Runtime: Select "Java 21"
    - Architecture: arm64
    - Execution role: Create a new role with basic Lambda permissions
-   - Advanced settings:
-     - Memory: 512 MB
-     - Timeout: 30 seconds
-   - Click "Create function"
+   - Click "Save"
+   - Change the configuration:
+     - Advanced settings:
+       - Memory: 512 MB
+       - Timeout: 30 seconds
+     - Click "Save"
 
 3. **Configure the Lambda function**
    - In the "Code" tab, click "Upload from" and select ".zip or .jar file"
